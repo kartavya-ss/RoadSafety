@@ -96,18 +96,22 @@ This helped **improve model accuracy by ~5%** by removing noise.
 
 
 ## 📂 Folder Structure
-├── README.md # Project documentation
-├── DataQuest_Megalith.ipynb # Main notebook for EDA, modeling, insights
-├── data/
-│ └── Data_Sheet.csv # Original dataset (renamed for clarity)
-├── presentation/
-│ └── Resource.pptx # Final presentation deck used in the hackathon
-├── reports/
-│ └── model_performance.md # (Optional) Model evaluation summary
-├── models/
-│ └── best_model.pkl # (Optional) Serialized trained model
-└── utils/
-└── helper_functions.py # (Optional) Utility functions for reuse
+## 📁 Folder Structure
+
+| Folder/File                   | Description                                                        |
+|------------------------------|--------------------------------------------------------------------|
+| `README.md`                  | Main documentation file for the project                            |
+| `DataQuest_Megalith.ipynb`   | Jupyter notebook with EDA, feature engineering, and ML modeling    |
+| `data/`                      | Folder containing dataset files                                    |
+| └── `Data_Sheet.csv`         | Cleaned version of the dataset                                     |
+| `presentation/`              | Folder for final hackathon presentation                            |
+| └── `Resource.pptx`          | PowerPoint presentation with slides and visual insights            |
+| `reports/`                   | (Optional) Folder for storing evaluation metrics or summaries      |
+| └── `model_performance.md`   | Markdown file summarizing model performance                        |
+| `models/`                    | (Optional) Folder for saving trained model artifacts               |
+| └── `best_model.pkl`         | Serialized ML model (if saved)                                     |
+| `utils/`                     | (Optional) Helper scripts or reusable functions                    |
+| └── `helper_functions.py`    | Python script for utilities used in the notebook                   |
 
 
 
