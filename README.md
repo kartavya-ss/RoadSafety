@@ -96,16 +96,20 @@ This helped **improve model accuracy by ~5%** by removing noise.
 
 
 ## 📂 Folder Structure
+├── README.md # Project documentation
+├── DataQuest_Megalith.ipynb # Main notebook for EDA, modeling, insights
 ├── data/
-├── notebooks/
-├── src/
-├── preprocessing.py
-├── model_training.py
-├── feature_selection.py
-├── outputs/
-├── graphs/
+│ └── Data_Sheet.csv # Original dataset (renamed for clarity)
+├── presentation/
+│ └── Resource.pptx # Final presentation deck used in the hackathon
+├── reports/
+│ └── model_performance.md # (Optional) Model evaluation summary
 ├── models/
-├── README.md
+│ └── best_model.pkl # (Optional) Serialized trained model
+└── utils/
+└── helper_functions.py # (Optional) Utility functions for reuse
+
+
 
 For queries or collaborations: [uttkarsh2003.solanki@gmail.com]
 
