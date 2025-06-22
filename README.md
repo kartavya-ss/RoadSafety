@@ -95,7 +95,7 @@ This helped **improve model accuracy by ~5%** by removing noise.
 🏅 Recognized for innovative feature engineering and actionable real-world recommendations.
 
 
-## 📂 Folder Structure
+
 ## 📁 Folder Structure
 
 | Folder/File                   | Description                                                        |
