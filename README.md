@@ -87,9 +87,7 @@ This helped **improve model accuracy by ~5%** by removing noise.
 
 ---
 
-## 🏆 Achievement
-
-✅ **Winner of DataQuest Hackathon**  
+✅ **DataQuest Hackathon**  
 🏅 Recognized for innovative feature engineering and actionable real-world recommendations.
 
 
@@ -113,7 +111,7 @@ This helped **improve model accuracy by ~5%** by removing noise.
 
 
 
-For queries or collaborations: [uttkarsh2003.solanki@gmail.com]
+For queries or collaborations: [info.srijankr@gmail.com]
 
 ---
 
