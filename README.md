@@ -1,6 +1,4 @@
-# 🚦 Crash Severity Prediction – DataQuest Hackathon Winning Project
-
-![Hackathon Badge](https://img.shields.io/badge/Winner-DataQuest%20Hackathon-blueviolet?style=for-the-badge)
+# 🚦 Crash Severity Prediction – DataQuest Hackathon Project
 
 ## 📌 Overview
 
