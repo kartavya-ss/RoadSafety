@@ -1,118 +1,93 @@
-# 🚦 Crash Severity Prediction – DataQuest Hackathon Project
+# Road Safety Crash Severity Prediction
 
-## 📌 Overview
+This project analyzes road-crash data and uses machine learning to classify crash severity as **Minor injury**, **Major injury**, or **Fatal crash**. It was developed as a DataQuest hackathon project and is intended for exploratory analysis and model comparison.
 
-Road accidents are a pressing public safety issue, particularly in high-traffic urban zones. Understanding and predicting the **severity of crashes**—whether a minor injury, major injury, or fatality—can help authorities take targeted action to prevent them.
+## Project Contents
 
-This project uses **machine learning** to predict crash severity based on a variety of features such as vehicle speed, lane width, time of crash, and more. It provides actionable insights and policy recommendations aimed at enhancing road safety.
+| File | Description |
+| --- | --- |
+| [Data Sheet - Sheet1.csv](Data%20Sheet%20-%20Sheet1.csv) | Source dataset with 300 crash records and 14 columns |
+| [DataQuest_Megalith.ipynb](DataQuest_Megalith.ipynb) | Complete EDA, feature engineering, hyperparameter tuning, and model evaluation notebook |
+| [Resource .pptx](Resource%20.pptx) | Project presentation |
 
----
+## Dataset
 
-## 🎯 Objective
+The dataset contains 300 records with 14 original fields and no missing values. The three target classes are balanced with 100 records each.
 
-- Build a predictive model to classify accident severity into:
-  - Minor Injury
-  - Major Injury
-  - Fatal Crash
-- Use insights from the model to **propose interventions** for reducing severe road incidents.
+Original fields include:
 
----
+- `Crash_Severity` - prediction target
+- `Vehicle_Speed`, `Speed_Limit`, `Crash_Time`, and `Age`
+- `Gender`, `Vehicle_Type`, `Road_Type`, `Crash_Type`, and `Road_Surface_Condition`
+- `Number_of_Lanes` and `Lane_Width`
+- `Alcohol_Consumption` and `Seatbelt_Usage`
 
-## 🧠 Methodology
+The notebook derives these additional features:
 
-### 1. 📊 Exploratory Data Analysis (EDA)
+- `Vehicle_Speed_Range`
+- `Age_Range`
+- `Lane_Width_Range`
+- `Over_Speeding` (`Vehicle_Speed - Speed_Limit`)
+- `Over_Speeding_binary`
 
-- Dataset: 300 rows × 14 features (7 categorical)
-- Clean and preprocessed: No missing values or class imbalance
-- Key insights:
-  - Peak crashes occur at 4 PM and 3 AM
-  - Overspeeding is highly associated with fatal crashes
-  - Lane width (especially 3.3–3.5 m) correlates with crash severity
+## Analysis Workflow
 
-### 2. 🔧 Feature Engineering
+The notebook performs the following steps:
 
-- **Speed Range Binning** – to analyze impact of overspeeding
-- **Age Grouping** – for demographic risk analysis
-- **Lane Width Binning** – for understanding structural risks
-- **Overspeeding Binary Flags** – useful in behavior modeling
+1. Loads and inspects the CSV dataset.
+2. Checks shape, data types, unique values, descriptive statistics, and missing values.
+3. Explores crash severity, speed, time, age, lane width, vehicle type, road conditions, alcohol consumption, and lane configuration through charts and heatmaps.
+4. Creates binned and overspeeding features.
+5. Label-encodes categorical variables.
+6. Splits the data into training and test sets using an 80/20 stratified split with `random_state=42`.
+7. Uses Optuna to tune four classifiers.
+8. Selects five features for the reduced models: `Vehicle_Speed`, `Crash_Time`, `Age`, `Over_Speeding`, and `Lane_Width`.
+9. Compares accuracy, classification reports, and confusion matrices.
 
-### 3. 🤖 Machine Learning Models
+## Recorded Model Results
 
-- **Random Forest**
-- XGBoost
-- LightGBM
-- CatBoost
+The following results are saved in the notebook for the 60-record test set. They are single-split results, not a cross-validation estimate.
 
-> **Best Performer:** Random Forest – ideal for small, clean datasets.  
-> **Hyperparameter tuning:** Done using **Optuna** with Bayesian Optimization (TPE Sampler)
+| Model | Accuracy | Macro F1 |
+| --- | ---: | ---: |
+| Random Forest, reduced features | **0.57** | 0.56 |
+| CatBoost, reduced features | 0.55 | 0.55 |
+| Random Forest, all features | 0.52 | 0.51 |
+| XGBoost, reduced features | 0.48 | 0.48 |
+| LightGBM, reduced features | 0.45 | 0.45 |
 
-### 4. ⭐ Feature Selection Strategy
+The recorded results suggest that reducing the feature set improved the Random Forest result from 0.52 to 0.57 on this split. Because the dataset is small, these results should be treated as exploratory rather than production-grade performance claims.
 
-Using Random Forest importance scores, the top 5 impactful features were selected:
-- Lane Width
-- Over Speeding
-- Vehicle Speed
-- Driver Age
-- Crash Time
+## Setup
 
-This helped **improve model accuracy by ~5%** by removing noise.
+Use Python 3.10 or newer when possible. Install the packages used by the notebook:
 
----
+```powershell
+python -m pip install numpy pandas matplotlib seaborn scikit-learn optuna xgboost lightgbm catboost jupyter
+```
 
-## 📈 Results
+Then open the notebook in VS Code or Jupyter:
 
-| Model         | Accuracy | Comments                                         |
-|---------------|----------|--------------------------------------------------|
-| Random Forest | ✅ Best   | Stable, accurate, interpretable                  |
-| CatBoost      | High     | Slightly overfit, good for categorical handling  |
-| XGBoost       | Lower    | Less effective on small dataset                  |
-| LightGBM      | Lower    | Similar to XGBoost, not ideal for low volume     |
+```powershell
+jupyter notebook DataQuest_Megalith.ipynb
+```
 
----
+The first notebook cell also installs the four model-tuning libraries. When running outside Google Colab, update the CSV path in the data-loading cell from `/content/Data Sheet - Sheet1.csv` to the location of the CSV in this repository, for example:
 
-## 🛠 Proposed Solutions Based on Model Insights
+```python
+df = pd.read_csv("Data Sheet - Sheet1.csv")
+```
 
-1. **Dynamic Speed Limits** – Adjust speed limits based on traffic/time/weather using digital boards
-2. **Dedicated Lanes** – Separate lanes for 2-wheelers, trucks, and heavy vehicles
-3. **Traffic Monitoring** – AI surveillance for overspeeding & lane misuse
-4. **Urban Planning** – Promote public transport, build flyovers, optimize high-density zones
+Run the cells from top to bottom so that the engineered features, encoders, Optuna studies, and trained models are created in order.
 
----
+## Limitations and Next Steps
 
-## 🔮 Future Scope
+- The dataset has only 300 records, so model performance may vary substantially with a different split.
+- The notebook uses one train/test split; cross-validation would provide a more reliable estimate.
+- No trained model artifact or prediction API is included in the repository.
+- Future work could add weather, road geometry, traffic volume, driver fatigue, vehicle telemetry, and richer crash-location data.
+- Any real-world deployment would require external validation, monitoring, fairness checks, and appropriate safety review.
 
-- Expand the dataset (driver fatigue, vehicle telemetry, road weather data)
-- Deploy predictive tools in emergency services for real-time risk alerts
-- Collaborate with urban planners & traffic departments for implementation
+## License
 
----
-
-✅ **DataQuest Hackathon**  
-🏅 Recognized for innovative feature engineering and actionable real-world recommendations.
-
-
-
-## 📁 Folder Structure
-
-| Folder/File                   | Description                                                        |
-|------------------------------|--------------------------------------------------------------------|
-| `README.md`                  | Main documentation file for the project                            |
-| `DataQuest_Megalith.ipynb`   | Jupyter notebook with EDA, feature engineering, and ML modeling    |
-| `data/`                      | Folder containing dataset files                                    |
-| └── `Data_Sheet.csv`         | Cleaned version of the dataset                                     |
-| `presentation/`              | Folder for final hackathon presentation                            |
-| └── `Resource.pptx`          | PowerPoint presentation with slides and visual insights            |
-| `reports/`                   | (Optional) Folder for storing evaluation metrics or summaries      |
-| └── `model_performance.md`   | Markdown file summarizing model performance                        |
-| `models/`                    | (Optional) Folder for saving trained model artifacts               |
-| └── `best_model.pkl`         | Serialized ML model (if saved)                                     |
-| `utils/`                     | (Optional) Helper scripts or reusable functions                    |
-| └── `helper_functions.py`    | Python script for utilities used in the notebook                   |
-
-
-
-For queries or collaborations: [info.srijankr@gmail.com]
-
----
-
-> 🚧 *"Together, we can save lives and build safer roads for everyone."*
+No license file is currently included. Add a license before redistributing the project.
